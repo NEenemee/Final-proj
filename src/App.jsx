@@ -11,7 +11,7 @@ function App() {
 
 
   const [timesData, setTimesData] = useState([]);
-  const [searchData, setSeachData] = useState([]);
+  const [searchData, setSearchData] = useState([]);
   const [isSearchButtonClicked, setIsSearchButtonClicked] = useState(false);
   const [sortOption, setSortOption] = useState(''); // Default sort option
 
@@ -24,7 +24,7 @@ function App() {
   }, []);
   // Handler for selecting data type
   const dataHandler = event => {
-    setSeachData([]);
+    setSearchData([]);
     const dataType = event.target.value;
     fetchTimesTopStories(dataType)
       .then(data => {
@@ -37,7 +37,7 @@ function App() {
       });
   };
 
-  function searchStuff(data) {
+  function renderSearchResults(data) {
     if (data.length !== 0) {
       return (
         <ul>
@@ -64,14 +64,14 @@ function App() {
   function dataHandler2(search, sort) {
     fetchTimesArticleSearch(search, sort)
       .then(data => {
-        setSeachData(data);
+        setSearchData(data);
       })
       .catch(error => {
         console.error('Error fetching data:', error);
       });
   }
   function handleSearch() {
-    setSeachData([]);
+    setSearchData([]);
     // Get the value of the input field
     var searchData = document.getElementById('search').value;
     // Call dataHandler2 and pass the search data
@@ -98,7 +98,7 @@ function App() {
       </div>
       
       {isSearchButtonClicked ? 
-        searchStuff(searchData)
+        renderSearchResults(searchData)
        : (
         <ul>
           {timesData.map((story, index) => (
